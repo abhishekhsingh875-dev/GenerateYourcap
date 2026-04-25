@@ -172,7 +172,7 @@ function App() {
         const jobId = Date.now().toString();
         try {
             setIsGenerating(true); setStage("generating"); setProgress(0); setProgressLabel("Connecting...");
-            const evtSource = new EventSource(`http://localhost:5000/progress/${jobId}`);
+            const evtSource = new EventSource(`http:// https://generatecap-backend.onrender.com/progress/${jobId}`);
             evtSource.onmessage = (e) => {
                 const d = JSON.parse(e.data);
                 setProgress(d.percent); setProgressLabel(d.label);
@@ -183,7 +183,7 @@ function App() {
             formData.append("video", videoFile);
             formData.append("jobId", jobId);
             formData.append("translate", translate ? "true" : "false");
-            const res = await fetch("http://localhost:5000/generate", {method:"POST",body:formData});
+            const res = await fetch("http:// https://generatecap-backend.onrender.com/generate", {method:"POST",body:formData});
             evtSource.close();
             if (!res.ok) throw new Error("Server error");
             const data = await res.json();
@@ -204,7 +204,7 @@ function App() {
             formData.append("video", videoFile);
             formData.append("captions", JSON.stringify(captions));
             formData.append("style", JSON.stringify(style));
-            const res = await fetch("http://localhost:5000/export", {method:"POST",body:formData});
+            const res = await fetch("http:// https://generatecap-backend.onrender.com/export", {method:"POST",body:formData});
             if (!res.ok) throw new Error("Export failed");
             const blob = await res.blob();
             const url = URL.createObjectURL(blob);
