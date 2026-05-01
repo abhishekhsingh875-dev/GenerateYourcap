@@ -188,7 +188,11 @@ function App() {
             formData.append("video", videoFile);
             formData.append("jobId", jobId);
             formData.append("translate", translate ? "true" : "false");
-            const res = await fetch(`${API}/generate`, {     method:"POST",     body:formData,     signal: AbortSignal.timeout(120000) });
+          const res = await fetch("https://generatecap-backend.onrender.com/export", {
+    method:"POST",
+    body:formData,
+    signal: AbortSignal.timeout(300000)
+});
             evtSource.close();
             if (!res.ok) throw new Error("Server error");
             const data = await res.json();
